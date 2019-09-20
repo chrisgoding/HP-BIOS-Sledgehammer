@@ -8,3 +8,7 @@ This leverages one homogeneous set of settings for every model I've encountered.
 If a setting doesn't exist for the targetted model, it skips it. One set of BIOS settings to rule them all.
 Place this in your imaging task sequence, or better, train your techs to run this on a PC before they reimage.
 Or both.
+
+Requires HP's BiosConfigUtility, available here: http://ftp.hp.com/pub/caps-softpaq/cmit/HP_BCU.html
+
+DO NOT deploy this to machines that are already in the field. They probably won't boot into windows without a reimage afterwards.
