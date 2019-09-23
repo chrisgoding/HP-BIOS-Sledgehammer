@@ -14,13 +14,33 @@
 
 pushd "%~dp0"
 setlocal enabledelayedexpansion
-if not exist C:\temp mkdir C:\Temp
-BiosConfigUtility.exe /get:"C:\Temp\BIOSDUMP.txt"
-for /F "tokens=*" %%A in ( reimagebcusettings.txt ) do (
-echo %%A > temp.txt
-for /F "delims=, tokens=1" %%B in ( temp.txt ) do (
-find %%B C:\Temp\BIOSDUMP.txt 
-if errorlevel 0 if not errorlevel 1 biosconfigutility.exe /setvalue:%%A )
-)
-del temp.txt /q
-popd
+
+:verifyHP &:: ensures that the PC running the script is an HP. Cancels it otherwise.
+	for /f "usebackq tokens=2 delims==" %%A IN (`wmic csproduct get vendor /value`) DO SET VENDOR=%%A
+
+	FOR %%G IN ("Hewlett-Packard"
+            "HP"
+            ) DO (
+            IF /I "%vendor%"=="%%~G" GOTO MATCHHP
+	    )
+
+		:NOMATCH
+			echo Not an HP, skipping SSM
+			GOTO abort
+
+		:MATCHHP
+			if not exist C:\temp mkdir C:\Temp
+			BiosConfigUtility.exe /get:"C:\Temp\BIOSDUMP.txt"
+			for /F "tokens=*" %%A in ( reimagebcusettings.txt ) do (
+				echo %%A > temp.txt
+				for /F "delims=, tokens=1" %%B in ( temp.txt ) do (
+					find %%B C:\Temp\BIOSDUMP.txt 
+					if errorlevel 0 if not errorlevel 1 biosconfigutility.exe /setvalue:%%A
+				)
+			)
+			del temp.txt /q
+
+
+:abort
+	popd
+	endlocal
