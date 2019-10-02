@@ -1,7 +1,3 @@
-I guess I should rename this to something else as "bios sledgehammer" is taken by a much more fully fledged project...https://github.com/texhex/BiosSledgehammer
-
-________________________________________________________________________________________________________________________________
-
 Ever had a tech say "I Reimaged this PC and it STILL doesn't work?"
 
 Inconsistent BIOS settings across your org can make for all kind of trouble when it comes time to reimage a PC.
