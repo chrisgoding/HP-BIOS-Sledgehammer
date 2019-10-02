@@ -18,7 +18,8 @@ setlocal enabledelayedexpansion
 :verifyHP &:: ensures that the PC running the script is an HP. Cancels it otherwise.
 	for /f "usebackq tokens=2 delims==" %%A IN (`wmic csproduct get vendor /value`) DO SET VENDOR=%%A
 
-	FOR %%G IN ("Hewlett-Packard"
+	FOR %%G IN (
+            "Hewlett-Packard"
             "HP"
             ) DO (
             IF /I "%vendor%"=="%%~G" GOTO MATCHHP
